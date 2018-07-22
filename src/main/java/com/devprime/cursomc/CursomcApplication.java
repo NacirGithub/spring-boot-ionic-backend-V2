@@ -10,10 +10,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.devprime.cursomc.domain.Categoria;
 import com.devprime.cursomc.domain.Cidade;
+import com.devprime.cursomc.domain.Cliente;
+import com.devprime.cursomc.domain.Endereco;
 import com.devprime.cursomc.domain.Estado;
 import com.devprime.cursomc.domain.Produto;
+import com.devprime.cursomc.domain.enums.TipoCliente;
 import com.devprime.cursomc.repositories.CategoriaRepository;
 import com.devprime.cursomc.repositories.CidadeRepository;
+import com.devprime.cursomc.repositories.ClienteRepository;
+import com.devprime.cursomc.repositories.EnderecoRepository;
 import com.devprime.cursomc.repositories.EstadoRepository;
 import com.devprime.cursomc.repositories.ProdutoRepository;
 
@@ -31,6 +36,12 @@ public class CursomcApplication implements CommandLineRunner{
 	
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -75,6 +86,18 @@ public class CursomcApplication implements CommandLineRunner{
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
 		
+		Cliente cli1 = new Cliente(null, "Una Nacir", "una.nacir@gmail.com", "84337834834", TipoCliente.PESSOAFISICA); 
+		cli1.getTelefones().addAll(Arrays.asList("847993530", "827993530"));
+		
+//		Endereco e1 =  new Endereco(null, "Expansao-1", "540", "Apto 30", "Bairro das gordas","", cid3, cli1);
+		
+		Endereco e1 = new Endereco(null, "Expansao-1", "540", "Apto 30", "Bairro das gordas", "4753485734", cli1, cid3);
+		Endereco e2 = new Endereco(null, "Av. 24 Julho", "540", "Apto 30", "Bairro das gordas", "4753485734", cli1, cid2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 		
 		
 	}
