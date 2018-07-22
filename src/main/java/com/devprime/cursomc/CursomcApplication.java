@@ -31,9 +31,9 @@ public class CursomcApplication implements CommandLineRunner{
 		Categoria cat1 = new Categoria(null, "Informatica");
 		Categoria cat2 = new Categoria(null, "Escritorio");
 		
-		Produto p1 = new Produto(null, "Macbook", 30000.00);
-		Produto p2 = new Produto(null, "EliteBook", 15000.00);
-		Produto p3 = new Produto(null, "RG", 30000.00);
+		Produto p1 = new Produto(null, "MacBook 2015", 100000.00);
+		Produto p2 = new Produto(null, "Padtouch", 1000.00);
+		Produto p3 = new Produto(null, "KeyBoard", 11000.00);
 		
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
