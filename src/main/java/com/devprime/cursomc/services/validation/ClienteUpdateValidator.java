@@ -2,43 +2,44 @@ package com.devprime.cursomc.services.validation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.HandlerMapping;
 
 import com.devprime.cursomc.domain.Cliente;
-import com.devprime.cursomc.domain.enums.TipoCliente;
-import com.devprime.cursomc.dto.ClienteNewDTO;
+import com.devprime.cursomc.dto.ClienteDTO;
 import com.devprime.cursomc.repositories.ClienteRepository;
 import com.devprime.cursomc.resources.exceptions.FieldMessage;
-import com.devprime.cursomc.services.validation.utils.BR;
 
-public class ClienteCreateNomeValidator implements ConstraintValidator<ClienteCreate, ClienteNewDTO> {
+public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClienteDTO> {
+	
+	@Autowired
+	private HttpServletRequest request;
 	
 	@Autowired
 	private ClienteRepository repo;
 	
 	@Override
-	public void initialize(ClienteCreate ann) {
+	public void initialize(ClienteUpdate ann) {
 	}
 	
 
 	@Override
-	public boolean isValid(ClienteNewDTO objDTO, ConstraintValidatorContext context) {
-		List<FieldMessage> list = new ArrayList<>();
+	public boolean isValid(ClienteDTO objDTO, ConstraintValidatorContext context) {
 		
-		if (objDTO.getTipoCliente().equals(TipoCliente.PESSOAFISICA.getCod()) && !BR.isValidCPF(objDTO.getCodigoPostal())) {
-			list.add(new FieldMessage("codigoPostal", "Codigo Postal invalido"));
-		}
+		@SuppressWarnings("unchecked")
+		Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+		Integer uriId = Integer.parseInt(map.get("id"));
 		
-		if (objDTO.getTipoCliente().equals(TipoCliente.PESSOAJURIDICA.getCod()) && !BR.isValidCNPJ(objDTO.getCodigoPostal())) {
-			list.add(new FieldMessage("codigoPostal", "Codigo Postal 2 invalido "));
-		}
+		List<FieldMessage> list = new ArrayList<>(); 
 		
 		Cliente aux = repo.findByEmail(objDTO.getEmail());
-		if(aux != null) {
+		if(aux != null && !aux.getId().equals(uriId) ) {
 			list.add(new FieldMessage("email", "Email jå existente"));
 		}
 		
