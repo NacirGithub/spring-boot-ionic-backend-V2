@@ -75,7 +75,7 @@ public class CursomcApplication implements CommandLineRunner{
 		Categoria cat4 = new Categoria(null, "Jardinagem");
 		Categoria cat5 = new Categoria(null, "AppleWatch");
 		Categoria cat6 = new Categoria(null, "Decoracao");
-		Categoria cat7 = new Categoria(null, " ");
+		Categoria cat7 = new Categoria(null, "Florista");
 		
 		Produto p1 = new Produto(null, "MacBook 2015", 100000.00);
 		Produto p2 = new Produto(null, "Padtouch", 1000.00);
