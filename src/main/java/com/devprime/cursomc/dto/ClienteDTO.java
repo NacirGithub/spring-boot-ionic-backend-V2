@@ -38,7 +38,7 @@ public class ClienteDTO implements Serializable {
 	}
 
 
-	public Integer getId() {
+	public Integer getId() { 
 		return id;
 	}
 
