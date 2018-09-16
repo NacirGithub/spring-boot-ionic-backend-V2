@@ -5,8 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.devprime.cursomc.domain.ItemPedido;
 
-@Repository 
+@Repository
 public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Integer> {
-	
 
 }

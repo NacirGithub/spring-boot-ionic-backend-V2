@@ -58,6 +58,25 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 		
+		<!-- provide second level caching functionality -->
+    <!-- https://mvnrepository.com/artifact/org.ehcache/ehcache -->
+  
+   <!--  <dependency>
+        <groupId>org.ehcache</groupId>
+        <artifactId>ehcache</artifactId>
+        <version>3.4.0</version>
+    </dependency> -->
+
+
+    <!-- provide ehcache integration with hibernate -->
+    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-ehcache -->
+  
+  <!--   <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-ehcache</artifactId>
+        <version>5.2.8.Final</version>
+    </dependency>
+     -->
 	</dependencies>
 
 	<build>

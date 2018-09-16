@@ -28,7 +28,7 @@ public class CategoriaService {
 				"Objecto nao encontrado! id: " + id + ",  Tipo: " + Categoria.class.getName()));
 	}
 
-	public Categoria create (Categoria obj) {
+	public Categoria create(Categoria obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
@@ -49,22 +49,21 @@ public class CategoriaService {
 			throw new DataIntegrityViolationException("Nao foi possivel apagar a categoria, porque possui produtos");
 		}
 	}
-	
-	public List<Categoria> findAll(){
+
+	public List<Categoria> findAll() {
 		return repo.findAll();
 	}
-	
-	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),
-				orderBy);
+
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
-	
+
 	public Categoria fromDTO(CategoriaDTO objDTO) {
 		return new Categoria(objDTO.getId(), objDTO.getNome());
 	}
-	
+
 	private void updateData(Categoria newObj, Categoria obj) {
-		newObj.setNome(obj.getNome() );
+		newObj.setNome(obj.getNome());
 	}
 }

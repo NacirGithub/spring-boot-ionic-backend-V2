@@ -9,7 +9,7 @@ import com.devprime.cursomc.domain.PagamentoBoleto;
 
 @Service
 public class BoletoService {
-	
+
 	public void preencherPagamentoBoleto(PagamentoBoleto pagto, Date instantePedido) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(instantePedido);

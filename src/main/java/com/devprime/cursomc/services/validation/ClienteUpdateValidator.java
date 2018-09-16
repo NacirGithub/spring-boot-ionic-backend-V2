@@ -17,33 +17,32 @@ import com.devprime.cursomc.repositories.ClienteRepository;
 import com.devprime.cursomc.resources.exceptions.FieldMessage;
 
 public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClienteDTO> {
-	
+
 	@Autowired
 	private HttpServletRequest request;
-	
+
 	@Autowired
 	private ClienteRepository repo;
-	
+
 	@Override
 	public void initialize(ClienteUpdate ann) {
 	}
-	
 
 	@Override
 	public boolean isValid(ClienteDTO objDTO, ConstraintValidatorContext context) {
-		
+
 		@SuppressWarnings("unchecked")
-		Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+		Map<String, String> map = (Map<String, String>) request
+				.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 		Integer uriId = Integer.parseInt(map.get("id"));
-		
-		List<FieldMessage> list = new ArrayList<>(); 
-		
+
+		List<FieldMessage> list = new ArrayList<>();
+
 		Cliente aux = repo.findByEmail(objDTO.getEmail());
-		if(aux != null && !aux.getId().equals(uriId) ) {
+		if (aux != null && !aux.getId().equals(uriId)) {
 			list.add(new FieldMessage("email", "Email jå existente"));
 		}
-		
-		
+
 		// inclua os testes aqui, inserindo erros na lista
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();

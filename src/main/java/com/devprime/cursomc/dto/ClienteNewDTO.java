@@ -1,4 +1,4 @@
- package com.devprime.cursomc.dto;
+package com.devprime.cursomc.dto;
 
 import java.io.Serializable;
 
@@ -11,57 +11,52 @@ import org.hibernate.validator.constraints.br.CPF;
 import com.devprime.cursomc.services.validation.ClienteCreate;
 
 @ClienteCreate
-public class ClienteNewDTO implements Serializable{
-	
+public class ClienteNewDTO implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	@NotEmpty(message="Preenchimento obrigatorio")
-	@Length(min=5, max=120, message="Deve ter entre 5 a 120 caracteres")
+
+	@NotEmpty(message = "Preenchimento obrigatorio")
+	@Length(min = 5, max = 120, message = "Deve ter entre 5 a 120 caracteres")
 	private String nome;
-	
-	@NotEmpty(message="Preenchimento obrigatorio no campo email")
-	@Email(message="Email invalido") 
+
+	@NotEmpty(message = "Preenchimento obrigatorio no campo email")
+	@Email(message = "Email invalido")
 	private String email;
-	
-	@NotEmpty(message="Preenchimento obrigatorio no campo codigo postal")
+
+	@NotEmpty(message = "Preenchimento obrigatorio no campo codigo postal")
 	@CPF
 	private String CodigoPostal;
-	
+
 	private Integer tipoCliente;
-	
-	@NotEmpty(message="Preenchimento obrigatorio no campo  logradouro")
+
+	@NotEmpty(message = "Preenchimento obrigatorio no campo  logradouro")
 	private String logradouro;
-	
-	@NotEmpty(message="Preenchimento obrigatorio no campo numero")
+
+	@NotEmpty(message = "Preenchimento obrigatorio no campo numero")
 	private String numero;
-	
+
 	private String complemento;
-	
-	@NotEmpty(message="Preenchimento obrigatorio no campo  bairro")
+
+	@NotEmpty(message = "Preenchimento obrigatorio no campo  bairro")
 	private String bairro;
-	
-	@NotEmpty(message="Preenchimento obrigatorio no campo cep")
+
+	@NotEmpty(message = "Preenchimento obrigatorio no campo cep")
 	private String cep;
-	
-	@NotEmpty(message="Preenchimento obrigatorio no campo telefone 1")
+
+	@NotEmpty(message = "Preenchimento obrigatorio no campo telefone 1")
 	private String telefone1;
-	
+
 	private String telefone2;
 	private String telefone3;
-	
+
 	private Integer cidadeId;
-	
-	
-	
 
 	public ClienteNewDTO() {
 		super();
 	}
-	
-	
 
 	public String getNome() {
 		return nome;
@@ -167,5 +162,4 @@ public class ClienteNewDTO implements Serializable{
 		this.cidadeId = cidadeId;
 	}
 
-	
 }

@@ -16,33 +16,33 @@ import com.devprime.cursomc.resources.exceptions.FieldMessage;
 import com.devprime.cursomc.services.validation.utils.BR;
 
 public class ClienteCreateValidator implements ConstraintValidator<ClienteCreate, ClienteNewDTO> {
-	
+
 	@Autowired
 	private ClienteRepository repo;
-	
+
 	@Override
 	public void initialize(ClienteCreate ann) {
 	}
-	
 
 	@Override
 	public boolean isValid(ClienteNewDTO objDTO, ConstraintValidatorContext context) {
 		List<FieldMessage> list = new ArrayList<>();
-		
-		if (objDTO.getTipoCliente().equals(TipoCliente.PESSOAFISICA.getCod()) && !BR.isValidCPF(objDTO.getCodigoPostal())) {
+
+		if (objDTO.getTipoCliente().equals(TipoCliente.PESSOAFISICA.getCod())
+				&& !BR.isValidCPF(objDTO.getCodigoPostal())) {
 			list.add(new FieldMessage("codigoPostal", "Codigo Postal invalido"));
 		}
-		
-		if (objDTO.getTipoCliente().equals(TipoCliente.PESSOAJURIDICA.getCod()) && !BR.isValidCNPJ(objDTO.getCodigoPostal())) {
+
+		if (objDTO.getTipoCliente().equals(TipoCliente.PESSOAJURIDICA.getCod())
+				&& !BR.isValidCNPJ(objDTO.getCodigoPostal())) {
 			list.add(new FieldMessage("codigoPostal", "Codigo Postal 2 invalido "));
 		}
-		
+
 		Cliente aux = repo.findByEmail(objDTO.getEmail());
-		if(aux != null) {
+		if (aux != null) {
 			list.add(new FieldMessage("email", "Email jå existente"));
 		}
-		
-		
+
 		// inclua os testes aqui, inserindo erros na lista
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();

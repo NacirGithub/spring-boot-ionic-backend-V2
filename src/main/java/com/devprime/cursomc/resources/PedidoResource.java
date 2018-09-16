@@ -1,7 +1,5 @@
 package com.devprime.cursomc.resources;
 
-
-
 import java.net.URI;
 
 import javax.validation.Valid;
@@ -21,23 +19,22 @@ import com.devprime.cursomc.services.PedidoService;
 import javassist.tools.rmi.ObjectNotFoundException;
 
 @RestController
-@RequestMapping(value="/pedidos")
+@RequestMapping(value = "/pedidos")
 public class PedidoResource {
-	
+
 	@Autowired
-	private PedidoService service; 
-	
-	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	private PedidoService service;
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Pedido> find(@PathVariable Integer id) throws ObjectNotFoundException {
 		Pedido obj = service.find(id);
-		return ResponseEntity.ok().body(obj);	
+		return ResponseEntity.ok().body(obj);
 	}
 
-	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> create(@Valid @RequestBody Pedido obj ) throws ObjectNotFoundException{
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> create(@Valid @RequestBody Pedido obj) throws ObjectNotFoundException {
 		obj = service.create(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 }

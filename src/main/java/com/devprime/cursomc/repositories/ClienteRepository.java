@@ -8,8 +8,8 @@ import com.devprime.cursomc.domain.Cliente;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
-	
-	@Transactional(readOnly=true)
-	Cliente findByEmail(String email); 
+
+	@Transactional(readOnly = true)
+	Cliente findByEmail(String email);
 
 }
