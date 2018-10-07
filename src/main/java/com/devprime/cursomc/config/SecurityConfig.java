@@ -1,6 +1,7 @@
 package com.devprime.cursomc.config;
 
-import org.assertj.core.util.Arrays;
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;//important*
 import org.springframework.web.cors.CorsConfigurationSource;//important*
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -35,10 +37,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-//		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
-//			http.headers().frameOptions().disable();
-//		}
-//		
+		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
+			http.headers().frameOptions().disable();
+		}
+		
 		 
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
@@ -55,4 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return source;
 	}
 
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }
