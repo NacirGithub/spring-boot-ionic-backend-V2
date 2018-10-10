@@ -4,9 +4,13 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.devprime.cursomc.domain.Cliente;
 import com.devprime.cursomc.domain.ItemPedido;
 import com.devprime.cursomc.domain.PagamentoBoleto;
 import com.devprime.cursomc.domain.Pedido;
@@ -14,6 +18,8 @@ import com.devprime.cursomc.domain.enums.EstadoPagamento;
 import com.devprime.cursomc.repositories.ItemPedidoRepository;
 import com.devprime.cursomc.repositories.PagamentoRepository;
 import com.devprime.cursomc.repositories.PedidoRepository;
+import com.devprime.cursomc.security.UserSS;
+import com.devprime.cursomc.services.exceptions.AuthorizationException;
 
 import javassist.tools.rmi.ObjectNotFoundException;
 
@@ -21,7 +27,7 @@ import javassist.tools.rmi.ObjectNotFoundException;
 public class PedidoService {
 
 	@Autowired
-	private PedidoRepository repo;
+	private PedidoRepository pedidoRepository;
 
 	@Autowired
 	private BoletoService boletoService;
@@ -42,7 +48,7 @@ public class PedidoService {
 	private EmailService emailService;
 
 	public Pedido find(Integer id) throws ObjectNotFoundException {
-		Optional<Pedido> obj = repo.findById(id);
+		Optional<Pedido> obj = pedidoRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objecto nao encontrado! id: " + id + ",  Tipo: " + Pedido.class.getName()));
 	}
@@ -60,7 +66,7 @@ public class PedidoService {
 			PagamentoBoleto pagto = (PagamentoBoleto) obj.getPagamento();
 			boletoService.preencherPagamentoBoleto(pagto, obj.getInstante());
 		}
-		obj = repo.save(obj);
+		obj = pedidoRepository.save(obj);
 		pagamentoRepository.save(obj.getPagamento());
 		for (ItemPedido itemPedido : obj.getItens()) {
 			itemPedido.setDesconto(0.0);
@@ -71,5 +77,17 @@ public class PedidoService {
 		itemPedidoRepository.saveAll(obj.getItens());
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
+	}
+	
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) throws ObjectNotFoundException{
+		UserSS user =  UserService.authenticated();
+		if(user == null) {
+			throw new AuthorizationException("Acesso negado!");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		
+			Cliente cliente = clienteService.find(user.getId());
+		
+		return pedidoRepository.findByCliente(cliente, pageRequest);
 	}
 }
