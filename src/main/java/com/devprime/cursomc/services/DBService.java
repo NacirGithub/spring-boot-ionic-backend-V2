@@ -111,9 +111,9 @@ public class DBService {
 
 		
 		Cliente cli2 = new Cliente(null, "Admin", "admin@email.com", "84337834834", TipoCliente.PESSOAFISICA, pwdEncoder.encode("root1"));
+		cli2.getTelefones().addAll(Arrays.asList("867993530", "857993530"));
 		cli2.addPerfil(Perfil.ADMIN);
-		cli1.getTelefones().addAll(Arrays.asList("867993530", "857993530"));
-
+		 
 		// Endereco e1 = new Endereco(null, "Expansao-1", "540", "Apto 30", "Bairro das
 		// gordas","", cid3, cli1);
 
